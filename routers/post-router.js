@@ -65,4 +65,21 @@ router.delete('/:id', (req, res) => {
     })
 })
 
+router.put('/:id', (req, res) => {
+    const updatedPost = req.body;
+    const id = Number(req.params.id)
+    Posts.update(id, updatedPost)
+    .then(post => {
+        if(post){
+            res.status(200).json(post)
+        }else{
+            res.status(404).json({message: 'Could not find post'})
+        }
+    })
+    .catch(error => {
+        console.log(error)
+        res.status(500).json({message: 'Error updating post'})
+    })
+})
+
 module.exports = router
