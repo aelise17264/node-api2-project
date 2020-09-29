@@ -82,4 +82,22 @@ router.put('/:id', (req, res) => {
     })
 })
 
+router.get('/:id/comments', (req, res) => {
+    const id = Number(req.params.id);
+    Posts.findPostComments(id)
+    .then((comment) => {
+        if(comment === undefined){
+            res.status(404).json({message: 'Comments not found'})
+        
+        }
+            res.status(200).json(comment)
+            
+    })
+    .catch(error => {
+        console.log(error)
+        res.status(500).json({message: 'Error finding comments'
+        })
+})
+})
+
 module.exports = router
