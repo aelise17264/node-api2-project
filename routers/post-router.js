@@ -100,4 +100,27 @@ router.get('/:id/comments', (req, res) => {
 })
 })
 
+router.post('/:id/comments', (req, res) => {
+    const {text} = req.body;
+    const id = Number(req.params.id);
+
+    Posts.findById(id)
+    .then(comment => {
+        if(commmet === undefined)
+        res.status(404).json({message: "The post with the specified ID does not exist."})
+        if(!{text}){
+        res.status(400)
+        }
+    })
+    Posts.insertComment({post_id: id, text: text})
+    .then(comment => {
+        res.status(201).json(comment)
+    })
+    .catch(error => {
+        console.log(error)
+        res.status(500).json({error: "The post information could not be modified."
+        })
+    })
+})
+
 module.exports = router
