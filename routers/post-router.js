@@ -32,4 +32,22 @@ router.post('/', (req, res) => {
     })
 })
 
+router.get('/:id', (req, res) => {
+    const id = Number(req.params.id);
+    Posts.findById(id)
+    .then(post => {
+        if(!post.id == id){
+            res.status(404).json({message: 'Post not found'})
+        
+        }else{
+            res.status(200).json(post)
+            }
+    })
+    .catch(error => {
+        console.log(error)
+        res.status(500).json({message: 'Error finding post'
+        })
+    })
+})
+
 module.exports = router
